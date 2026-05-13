@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { items, status, error } = useSelector((state) => state.products);
 
-  // Get stored user object
+  // Stored user
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // User details
   const userName = user?.name;
   const userEmail = user?.email;
   const userRole = user?.role;
@@ -34,7 +34,7 @@ function Dashboard() {
     return ["all", ...new Set(items.map((item) => item.category))];
   }, [items]);
 
-  // Filter + Search + Sort
+  // Filter logic
   const filteredProducts = useMemo(() => {
     let products = [...items];
 
@@ -45,7 +45,7 @@ function Dashboard() {
       );
     }
 
-    // Category filter
+    // Category
     if (category !== "all") {
       products = products.filter((product) => product.category === category);
     }
@@ -66,16 +66,6 @@ function Dashboard() {
     return products;
   }, [items, searchTerm, category, sortBy]);
 
-  // Loading state
-  if (status === "loading") {
-    return <h2>Loading products...</h2>;
-  }
-
-  // Error state
-  if (status === "failed") {
-    return <h2>{error}</h2>;
-  }
-
   // Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -84,28 +74,58 @@ function Dashboard() {
     navigate("/login");
   };
 
+  // Loading
+  if (status === "loading") {
+    return (
+      <div className="loading-screen">
+        <div className="loader"></div>
+        <h2>Loading Products...</h2>
+      </div>
+    );
+  }
+
+  // Error
+  if (status === "failed") {
+    return <h2 className="error-text">{error}</h2>;
+  }
+
   return (
-    <div className="dashboard">
-      {/* User Info */}
+    <div className="dashboard-container">
+      {/* Header */}
 
-      <div className="user-div">
-        <h1>Welcome, {userName} 🙋‍♂️✌️</h1>
+      <div className="dashboard-header">
+        <div className="user-info">
+          <div className="user-avatar">{userName?.charAt(0)}</div>
 
-        <p>Email: {userEmail}</p>
+          <div>
+            <h1>Welcome Back, {userName} 👋</h1>
 
-        <p>Role: {userRole}</p>
+            <p>{userEmail}</p>
 
-        <button onClick={handleLogout}>Log out</button>
+            <span className="role-badge">{userRole}</span>
+          </div>
+        </div>
+
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
-      <h2>Products</h2>
+      {/* Title */}
+
+      <div className="dashboard-top">
+        <h2>Discover Amazing Products</h2>
+
+        <p>Explore modern fashion, electronics and more</p>
+      </div>
 
       {/* Filters */}
 
-      <div className="filters">
+      <div className="filters-container">
         <input
           type="text"
-          placeholder="Search by product title..."
+          className="search-input"
+          placeholder="Search products..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -133,21 +153,30 @@ function Dashboard() {
 
       <div className="products-grid">
         {filteredProducts.length === 0 ? (
-          <p className="empty-text">No products found.</p>
+          <p className="empty-text">No products found</p>
         ) : (
           filteredProducts.map((product) => (
             <div key={product.id} className="product-card">
-              <img src={product.image} alt={product.title} />
+              <div className="product-image-container">
+                <img src={product.image} alt={product.title} />
+              </div>
 
-              <h4>{product.title}</h4>
+              <div className="product-content">
+                <p className="product-category">{product.category}</p>
 
-              <p>₹ {product.price}</p>
+                <h4>{product.title}</h4>
 
-              <p style={{ fontSize: "12px" }}>{product.category}</p>
+                <div className="product-bottom">
+                  <p className="product-price">₹ {product.price}</p>
 
-              <button onClick={() => dispatch(addToCart(product))}>
-                Add to Cart
-              </button>
+                  <button
+                    className="cart-btn"
+                    onClick={() => dispatch(addToCart(product))}
+                  >
+                    Add To Cart
+                  </button>
+                </div>
+              </div>
             </div>
           ))
         )}

@@ -2,50 +2,118 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../features/carts/cartSlice";
 import { useNavigate } from "react-router-dom";
 
+import "../styles/Cart.css";
+
 function Carts() {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const cartItems = useSelector((state) => state.cart.items);
-  const userEmail = localStorage.getItem("userEmail");
 
+  // User details
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const userName = user?.name;
+  const userEmail = user?.email;
+
+  // Cart totals
   const totalItems = cartItems.length;
-  const totalAmount = cartItems.reduce(
-    (sum, item) => sum + item.price,
-    0
-  );
 
+  const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  // Buy button
   const handleBuy = () => {
     navigate("/payment");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>My Cart</h1>
-      <p>User: <strong>{userEmail}</strong></p>
+    <div className="cart-container">
+      {/* Header */}
 
-      <h3>Total Items: {totalItems}</h3>
-      <h3>Total Amount: ₹ {totalAmount.toFixed(2)}</h3>
+      <div className="cart-header">
+        <div>
+          <h1>My Shopping Cart 🛒</h1>
 
-      {cartItems.length === 0 && <h2>No items in cart</h2>}
+          <p>
+            Welcome back, <span>{userName}</span>
+          </p>
 
-      {cartItems.map((item) => (
-        <div key={item.id} style={{ display: "flex", gap: "20px", marginBottom: "10px" }}>
-          <img src={item.image} alt={item.title} height="80" />
-          <div style={{ flex: 1 }}>
-            <h4>{item.title}</h4>
-            <p>₹ {item.price}</p>
+          <small>{userEmail}</small>
+        </div>
+
+        <div className="cart-summary">
+          <div className="summary-card">
+            <h3>Total Items</h3>
+
+            <p>{totalItems}</p>
           </div>
-          <button onClick={() => dispatch(removeFromCart(item.id))}>
-            Remove
+
+          <div className="summary-card">
+            <h3>Total Amount</h3>
+
+            <p>₹ {totalAmount.toFixed(2)}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Empty Cart */}
+
+      {cartItems.length === 0 && (
+        <div className="empty-cart">
+          <h2>Your cart is empty 😔</h2>
+
+          <p>Start adding products to your cart</p>
+
+          <button className="shop-btn" onClick={() => navigate("/")}>
+            Continue Shopping
           </button>
         </div>
-      ))}
+      )}
+
+      {/* Cart Items */}
+
+      <div className="cart-items">
+        {cartItems.map((item) => (
+          <div key={item.id} className="cart-card">
+            {/* Image */}
+
+            <div className="cart-image">
+              <img src={item.image} alt={item.title} />
+            </div>
+
+            {/* Content */}
+
+            <div className="cart-content">
+              <span className="cart-category">{item.category}</span>
+
+              <h3>{item.title}</h3>
+
+              <p className="cart-price">₹ {item.price}</p>
+            </div>
+
+            {/* Actions */}
+
+            <div className="cart-actions">
+              <button
+                className="remove-btn"
+                onClick={() => dispatch(removeFromCart(item.id))}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Checkout */}
 
       {cartItems.length > 0 && (
-        <button onClick={handleBuy} style={{ marginTop: "20px" }}>
-          Buy Items
-        </button>
+        <div className="checkout-section">
+          <button className="checkout-btn" onClick={handleBuy}>
+            Proceed To Checkout
+          </button>
+        </div>
       )}
     </div>
   );

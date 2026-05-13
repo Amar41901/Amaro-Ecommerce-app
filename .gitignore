@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# environment variables
+.env
+
+# production build
+dist/
+build/
+
+# logs
+npm-debug.log*
+
+# vite files
+.vite/
+
+# OS files
+.DS_Store
+Thumbs.db

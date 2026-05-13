@@ -1,0 +1,136 @@
+/* ===== PAGE LAYOUT ===== */
+.user-div{
+  display: flex;
+  /* width: max-content; */
+  align-items: center;
+  justify-content: space-between;
+  background-color: burlywood;
+  border: 2px double burlywood;
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px 3px blue;
+  color: white;
+  font-family:monospace;
+  padding: 0px 100px;
+}
+
+.user-div button{
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(166, 37, 37);
+  color: white;
+  padding: 10px;
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+.dashboard h1 {
+  margin-bottom: 10px;
+}
+
+.dashboard h2 {
+  margin-bottom: 20px;
+}
+
+/* ===== FILTER BAR ===== */
+.filters {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* ===== PRODUCTS GRID ===== */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ===== PRODUCT CARD ===== */
+.product-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 15px;
+  background-color: #fff;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.product-card img {
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.product-card h4 {
+  font-size: 14px;
+  height: 38px;
+  overflow: hidden;
+}
+
+.product-card p {
+  margin: 5px 0;
+}
+
+/* ===== ADD TO CART BUTTON ===== */
+.product-card button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.product-card button:hover {
+  background-color: #1e40af;
+  transform: scale(1.05);
+}
+
+.product-card button:active {
+  transform: scale(0.95);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-text {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

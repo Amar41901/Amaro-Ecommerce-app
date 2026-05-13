@@ -1,0 +1,59 @@
+.form-div{
+    height: 50vh;
+    background-color: cadetblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    background-color: var(--bg-color);
+    color: var(--text_color);
+    padding: 50px;
+    border: 5px solid orange;
+    box-shadow: 5px 5px 5px 3px gray;
+    /* align-items: center; */
+}
+
+.field{
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.field label{
+    font-size: larger;
+}
+
+.field input{
+    flex: 1 -1;
+    padding: 8px 10px;
+}
+
+.error-msg{
+    color: red;
+    margin-bottom: 10px;
+}
+
+.buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.buttons button{
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.buttons button:last-child{
+    background-color: rgb(81, 81, 198);
+}
+
+#reset{
+    background-color: red;
+}
+

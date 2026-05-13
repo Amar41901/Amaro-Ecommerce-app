@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/Form.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 function Registration() {
@@ -46,7 +46,7 @@ function Registration() {
       errors.password = "Password must be at least 6 characters";
     }
 
-    // Confirm password validation
+    // Confirm Password validation
     if (data.confirmPassword.trim() === "") {
       errors.confirmPassword = "Confirm password is required";
     } else if (data.password !== data.confirmPassword) {
@@ -56,7 +56,6 @@ function Registration() {
     return errors;
   };
 
-  // IMPORTANT → async added here
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -75,10 +74,9 @@ function Registration() {
           },
         );
 
-        console.log(response.data);
-
-        // Store JWT token
         localStorage.setItem("token", response.data.token);
+
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
         alert("Registration successful");
 
@@ -90,8 +88,6 @@ function Registration() {
 
         alert(error?.response?.data?.message || "Registration failed");
       }
-    } else {
-      console.log("Validation Errors:", newErrors);
     }
   };
 
@@ -107,83 +103,113 @@ function Registration() {
   };
 
   return (
-    <div className="form-div">
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        {/* Name */}
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>Create Account 🚀</h1>
 
-        <div className="field">
-          <label htmlFor="name">Name:-</label>
-
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
+          <p>Register to explore amazing products</p>
         </div>
 
-        {errors.name && <span className="error-msg">{errors.name}</span>}
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit}
+          onReset={handleReset}
+        >
+          {/* Name */}
 
-        {/* Email */}
+          <div className="field">
+            <label htmlFor="name">Full Name</label>
 
-        <div className="field">
-          <label htmlFor="email">Email:-</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
+          {errors.name && <span className="error-msg">{errors.name}</span>}
 
-        {errors.email && <span className="error-msg">{errors.email}</span>}
+          {/* Email */}
 
-        {/* Password */}
+          <div className="field">
+            <label htmlFor="email">Email Address</label>
 
-        <div className="field">
-          <label htmlFor="password">Password:-</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
+          {errors.email && <span className="error-msg">{errors.email}</span>}
 
-        {errors.password && (
-          <span className="error-msg">{errors.password}</span>
-        )}
+          {/* Password */}
 
-        {/* Confirm Password */}
+          <div className="field">
+            <label htmlFor="password">Password</label>
 
-        <div className="field">
-          <label htmlFor="confirmPassword">Confirm Password:-</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Create password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
+          {errors.password && (
+            <span className="error-msg">{errors.password}</span>
+          )}
 
-        {errors.confirmPassword && (
-          <span className="error-msg">{errors.confirmPassword}</span>
-        )}
-        {/* Buttons */}
-        <div className="buttons">
-          <button id="reset" type="reset">
-            Reset
-          </button>
-          <button type="submit">Register</button>
-        </div>
-      </form>
+          {/* Confirm Password */}
+
+          <div className="field">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+          </div>
+
+          {errors.confirmPassword && (
+            <span className="error-msg">{errors.confirmPassword}</span>
+          )}
+
+          {/* Buttons */}
+
+          <div className="buttons">
+            <button className="secondary-btn" id="reset" type="reset">
+              Reset
+            </button>
+
+            <button className="primary-btn" type="submit">
+              Register
+            </button>
+          </div>
+
+          {/* Footer */}
+
+          <div className="auth-footer">
+            <p>
+              Already have an account?
+              <Link to="/login">Login Here</Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

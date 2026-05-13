@@ -25,14 +25,12 @@ function LoginPage() {
   const validateData = (data) => {
     const errors = {};
 
-    // Email validation
     if (data.email.trim() === "") {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(data.email)) {
       errors.email = "Invalid email format";
     }
 
-    // Password validation
     if (data.password.trim() === "") {
       errors.password = "Password is required";
     } else if (data.password.length < 6) {
@@ -59,12 +57,8 @@ function LoginPage() {
           },
         );
 
-        console.log(response.data);
-
-        // Store JWT token
         localStorage.setItem("token", response.data.token);
 
-        // Optional user data
         localStorage.setItem("user", JSON.stringify(response.data.user));
 
         alert("Login successful");
@@ -77,8 +71,6 @@ function LoginPage() {
 
         alert(error?.response?.data?.message || "Login failed");
       }
-    } else {
-      console.log("Validation Errors:", newErrors);
     }
   };
 
@@ -92,52 +84,71 @@ function LoginPage() {
   };
 
   return (
-    <div className="form-div">
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        {/* Email */}
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>Welcome Back 👋</h1>
 
-        <div className="field">
-          <label htmlFor="email">Email:-</label>
-
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+          <p>Login to continue shopping</p>
         </div>
 
-        {errors.email && <span className="error-msg">{errors.email}</span>}
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit}
+          onReset={handleReset}
+        >
+          {/* Email */}
 
-        {/* Password */}
+          <div className="field">
+            <label htmlFor="email">Email Address</label>
 
-        <div className="field">
-          <label htmlFor="password">Password:-</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
+          {errors.email && <span className="error-msg">{errors.email}</span>}
 
-        {errors.password && (
-          <span className="error-msg">{errors.password}</span>
-        )}
+          {/* Password */}
 
-        {/* Buttons */}
+          <div className="field">
+            <label htmlFor="password">Password</label>
 
-        <div className="buttons">
-          <button type="submit">Login</button>
-        </div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
 
-        <h3>
-          New user? <Link to="/signin">Register</Link>
-        </h3>
-      </form>
+          {errors.password && (
+            <span className="error-msg">{errors.password}</span>
+          )}
+
+          {/* Buttons */}
+
+          <div className="buttons">
+            <button className="primary-btn" type="submit">
+              Login
+            </button>
+          </div>
+
+          <div className="auth-footer">
+            <p>
+              New user?
+              <Link to="/signin">Register Here</Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

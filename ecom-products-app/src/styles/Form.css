@@ -1,59 +1,252 @@
-.form-div{
-    height: 50vh;
-    background-color: cadetblue;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #7c3aed;
+  --background-color: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --text-color: #ffffff;
+  --input-bg: rgba(255, 255, 255, 0.12);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --error-color: #ff4d4f;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-    background-color: var(--bg-color);
-    color: var(--text_color);
-    padding: 50px;
-    border: 5px solid orange;
-    box-shadow: 5px 5px 5px 3px gray;
-    /* align-items: center; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.field{
-    display: flex;
-    justify-content: space-between;
-    gap: 50px;
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #312e81);
+
+  min-height: 100vh;
 }
 
-.field label{
-    font-size: larger;
+/* Main Container */
+
+.auth-container {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  animation: fadeIn 1s ease;
 }
 
-.field input{
-    flex: 1 -1;
-    padding: 8px 10px;
+/* Glass Card */
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+
+  background: var(--card-bg);
+
+  backdrop-filter: blur(15px);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 24px;
+
+  padding: 40px;
+
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+
+  animation: slideUp 0.8s ease;
 }
 
-.error-msg{
-    color: red;
-    margin-bottom: 10px;
+/* Header */
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.buttons{
-    display: flex;
-    gap: 10px;
+.auth-header h1 {
+  color: var(--text-color);
+
+  font-size: 2rem;
+  font-weight: 600;
+
+  margin-bottom: 10px;
 }
 
-.buttons button{
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
+.auth-header p {
+  color: #cbd5e1;
+  font-size: 0.95rem;
 }
 
-.buttons button:last-child{
-    background-color: rgb(81, 81, 198);
+/* Form */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-#reset{
-    background-color: red;
+/* Input Field */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
+.field label {
+  color: var(--text-color);
+
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.field input {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  border: 1px solid transparent;
+
+  background: var(--input-bg);
+
+  color: white;
+
+  font-size: 0.95rem;
+
+  outline: none;
+
+  transition: all 0.3s ease;
+}
+
+.field input::placeholder {
+  color: #cbd5e1;
+}
+
+.field input:focus {
+  border-color: var(--primary-color);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+}
+
+/* Errors */
+
+.error-msg {
+  color: var(--error-color);
+
+  font-size: 0.85rem;
+
+  margin-top: -12px;
+}
+
+/* Buttons */
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.primary-btn {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+
+  color: white;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.45);
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+}
+
+/* Footer */
+
+.auth-footer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.auth-footer p {
+  color: #cbd5e1;
+}
+
+.auth-footer a {
+  color: #a78bfa;
+
+  text-decoration: none;
+
+  margin-left: 6px;
+
+  font-weight: 500;
+
+  transition: color 0.3s ease;
+}
+
+.auth-footer a:hover {
+  color: white;
+}
+
+/* Animations */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 500px) {
+  .auth-card {
+    padding: 30px 20px;
+  }
+
+  .auth-header h1 {
+    font-size: 1.7rem;
+  }
+}
